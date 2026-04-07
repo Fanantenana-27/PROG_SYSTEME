@@ -20,9 +20,9 @@ if fils==0:
         print("Le mot {} n'est pas dans le fichier mots.txt \n".format(bufferWrite))
 else:
     os.close(w1)
-    message=os.read(r1,1024)#Lire le mot dans le tube
+    os.dup2(r1,0)
     os.close(r1)
-    bufferRead=str(message.decode())
+    bufferRead=input("")
     file=open("mots.txt","r") #Ouvrir le fichier mots.txt
     chaine=file.readline()
     ret=chaine.find(bufferRead) #Chercher le mot dans le fichier
@@ -33,6 +33,7 @@ else:
     file.close()
     os.close(r2)
     valeurW=str(valeurW) 
-    os.write(w2,valeurW) #Ecrire le résultat dans le tube 
+    os.dup2(w2,1) #Ecrire le résultat dans le tube 
     os.close(w2)
+    print("{}".format(valeurW))
     os.wait()
